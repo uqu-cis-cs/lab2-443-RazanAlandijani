@@ -21,6 +21,7 @@ public class Garage{
      * private classType [] varName = new classType[size];
      *
      */
+    private Car[] cars = new Car[3];
 
     /************ Part 2 **************/
     /**
@@ -31,6 +32,7 @@ public class Garage{
      * public dataType varName= value;
      *
      */
+    public static int countCars = 0
 
     /************ Part 3 **************/
     /**
@@ -45,6 +47,11 @@ public class Garage{
      *     }
      *}
      */
+    public Garage() {
+        for (int r = 0; r < cars.length; r++){
+            cars[r] = new Car();
+        }
+    }
 
     /************ Part 4 **************/
     /**
@@ -59,6 +66,27 @@ public class Garage{
      * Syntax:
      * public void methodName(String m)
      */
+    public void addCar (String model) {
+        if (countCars == cars.length) {
+            System.out.println("Garage is full. Cannot add any more cars.");
+        }
+        else {
+            boolean carExist = false;
+            for (int r = 0; r < countCars; r++) {
+                if (cars[r].getModel().equals(model)){
+                    System.out.println("Car " + model + " already exists in the garage.");
+                    carExist = true;
+                    break;
+                }
+            }
+            if (!carExist) {
+                cars[countCars].setModel(model);
+                cars[countCars].moveCarIn();
+                countCars++;
+                //System.out.println ("Car " + model + " added to the garage.");
+            }
+        }
+    }
 
 
     /************ Part 5 **************/
@@ -71,6 +99,24 @@ public class Garage{
      * public void methodName(String m)
      *
      */
+    public void moveOut (String model) {
+        boolean carExist = false;
+        for (int r = 0; r < countCars; r++) {
+            if (cars [r].getModel().equals(model)) {
+                cars[r].moveCarOut();
+                System.out.println("Car " + model + " moved out of the garage.");
+                carExist = true;
+                for (int k = r; k < countCars - 1; k++) {
+                    cars[k] = cars [k+1];
+                }
+                countCars--;
+                break;
+            }
+        }
+        if (!carExist){
+            System.out.println("Car " + model + " does not exist in the garage.");
+        }
+    }
 
 
 
@@ -84,6 +130,19 @@ public class Garage{
      * public void methodName(String m)
      *
      */
+    public void moveIn(String model) {
+        boolean carExist = false;
+        for (int r = 0; r < countCars; r++) {
+            if (cars [r].getModel().equals(model)) {
+                System.out.println ("car " + model +" is already in the garage.");
+                carExist = true;
+                break;
+            }
+        }
+        if (!carExist) {
+            addCar(model);
+        }
+    }
 
 
     /************ Part 7 **************/
@@ -95,6 +154,11 @@ public class Garage{
      * public void methodName(String m)
      *
      */
+    public void listCars() {
+        for (int r = 0; r < countCars; r++) {
+            System.out.println("Car " + (r+1) + ": " + cars[r].getModel());
+        }
+    }
 
 
 
